@@ -251,6 +251,7 @@ func (c *jsonCodec) closed() <-chan interface{} {
 func parseMessage(raw json.RawMessage) ([]*jsonrpcMessage, bool) {
 	if !isBatch(raw) {
 		msgs := []*jsonrpcMessage{{}}
+		raw = []byte(strings.ReplaceAll(string(raw), "ANT", "0x"))
 		json.Unmarshal(raw, &msgs[0])
 		return msgs, false
 	}

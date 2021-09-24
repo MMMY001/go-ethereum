@@ -23,6 +23,7 @@ import (
 	"math/big"
 	"reflect"
 	"strconv"
+	"strings"
 )
 
 var (
@@ -49,6 +50,7 @@ func (b *Bytes) UnmarshalJSON(input []byte) error {
 	if !isString(input) {
 		return errNonString(bytesT)
 	}
+	input = []byte(strings.ReplaceAll(string(input), "ANT", "0x"))
 	return wrapTypeError(b.UnmarshalText(input[1:len(input)-1]), bytesT)
 }
 

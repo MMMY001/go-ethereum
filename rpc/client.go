@@ -25,6 +25,7 @@ import (
 	"net/url"
 	"reflect"
 	"strconv"
+	"strings"
 	"sync/atomic"
 	"time"
 
@@ -334,7 +335,8 @@ func (c *Client) CallContext(ctx context.Context, result interface{}, method str
 	case len(resp.Result) == 0:
 		return ErrNoResult
 	default:
-		return json.Unmarshal(resp.Result, &result)
+		return json.Unmarshal([]byte(strings.ReplaceAll(string(resp.Result), "ANT", "0x")), &result)
+		//return json.Unmarshal(resp.Result, &result)
 	}
 }
 
